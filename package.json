@@ -1,0 +1,59 @@
+{
+  "name": "mcpx",
+  "version": "0.4.1",
+  "description": "A command-line client for MCP servers: list and call tools from any shell, script or coding agent. Stdio, Streamable HTTP and SSE; OAuth with keychain storage.",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "cli",
+    "oauth",
+    "claude",
+    "agents",
+    "llm",
+    "tools"
+  ],
+  "license": "MIT",
+  "author": "Timo Willemsen",
+  "homepage": "https://github.com/TimoWillemsen/mcpx#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimoWillemsen/mcpx.git"
+  },
+  "bugs": {
+    "url": "https://github.com/TimoWillemsen/mcpx/issues"
+  },
+  "type": "module",
+  "bin": {
+    "mcpx": "dist/cli.js"
+  },
+  "files": [
+    "dist/**/*.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "tsx src/cli.ts",
+    "test": "npm run compile && vitest run",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm test",
+    "check:dist": "npm run compile && git diff --exit-code --stat -- dist plugins",
+    "compile": "tsc && node -e \"require('fs').chmodSync('dist/cli.js', 0o755)\" && node scripts/build-plugin.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.1",
+    "@napi-rs/keyring": "^2.1.1",
+    "commander": "^15.0.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@modelcontextprotocol/server-everything": "^1.0.0",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.5"
+  },
+  "private": "true"
+}

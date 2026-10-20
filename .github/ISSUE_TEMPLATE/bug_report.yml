@@ -1,0 +1,52 @@
+name: Bug report
+description: Something in mcpx doesn't work as documented
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting! Please **remove tokens, API keys and other secrets** from
+        anything you paste. For security issues, don't open an issue: see SECURITY.md.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What you ran, what you expected, and what you got instead.
+      placeholder: |
+        mcpx call notes search_notes '{"query":"x"}'
+        Expected: ...
+        Got: ...
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Output
+      description: stdout and stderr (the JSON error line), plus the exit code (`echo $?`).
+      render: shell
+  - type: dropdown
+    id: transport
+    attributes:
+      label: Server transport
+      options: [stdio, Streamable HTTP, HTTP+SSE, not server-related]
+    validations:
+      required: true
+  - type: dropdown
+    id: auth
+    attributes:
+      label: Authentication
+      options: [none, static header, OAuth (mcpx login), not sure]
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: Output of `mcpx --version` and `node --version`, and your OS.
+      placeholder: "mcpx 0.1.0, node v22.12.0, macOS 15"
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: servers.json entry (redacted)
+      description: The entry for the server involved, with secrets replaced.
+      render: json

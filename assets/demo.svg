@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="682" viewBox="0 0 1280 682" role="img" aria-label="Terminal session: listing servers, logging in with OAuth, listing and calling tools with mcpx">
+  <rect width="1280" height="682" rx="16" fill="#0f1428" stroke="#2a3157" stroke-width="1.5"/>
+  <circle cx="32" cy="32" r="7" fill="#ff5f57"/><circle cx="56" cy="32" r="7" fill="#febc2e"/><circle cx="80" cy="32" r="7" fill="#28c840"/>
+  <text x="640" y="38" text-anchor="middle" font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="15" fill="#5d6690">~/projects — zsh</text>
+  <line x1="0" y1="62" x2="1280" y2="62" stroke="#2a3157"/>
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace" font-size="19">
+    <text x="36" y="92" fill="#5d6690"># what's configured (no connections made)</text>
+    <text x="36" y="122" fill="#e6e9ff"><tspan fill="#3ddc97">$</tspan> mcpx servers --text</text>
+    <text x="36" y="152" fill="#e6e9ff" fill-opacity="0.85">files  stdio  npx -y @modelcontextprotocol/server-filesystem ~/projects</text>
+    <text x="36" y="182" fill="#e6e9ff" fill-opacity="0.85">notes  http   https://mcp.example.com/mcp</text>
+    <text x="36" y="242" fill="#5d6690"># one-time OAuth login: browser consent, token goes to the OS keychain</text>
+    <text x="36" y="272" fill="#e6e9ff"><tspan fill="#3ddc97">$</tspan> mcpx login notes --text</text>
+    <text x="36" y="302" fill="#8a93b8">Authorize mcpx for "notes" in your browser:</text>
+    <text x="36" y="332" fill="#8a93b8">  https://mcp.example.com/authorize?response_type=code&amp;client_id=…</text>
+    <text x="36" y="362" fill="#8a93b8">Waiting for you to approve...</text>
+    <text x="36" y="392" fill="#3ddc97">Logged in to "notes" (scope: read); 12 tools available.</text>
+    <text x="36" y="452" fill="#5d6690"># discover, then call</text>
+    <text x="36" y="482" fill="#e6e9ff"><tspan fill="#3ddc97">$</tspan> mcpx tools notes --text</text>
+    <text x="36" y="512" fill="#e6e9ff" fill-opacity="0.85">search_notes  Full-text search across notes</text>
+    <text x="36" y="542" fill="#e6e9ff" fill-opacity="0.85">get_note      Fetch one note by id</text>
+    <text x="36" y="572" fill="#e6e9ff" fill-opacity="0.85">create_note   Create a note</text>
+    <text x="36" y="602" fill="#e6e9ff"><tspan fill="#3ddc97">$</tspan> mcpx call notes search_notes '{"query":"release plan"}' | jq '.content[0]'</text>
+    <text x="36" y="632" fill="#2ec5ff">{ "type": "text", "text": "3 notes match: Q4 release plan, launch checklist, …" }</text>
+  </g>
+</svg>

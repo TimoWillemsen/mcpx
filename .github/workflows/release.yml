@@ -1,0 +1,59 @@
+name: Release
+
+# Cut a patch release when a merged change touches the package's runtime
+# dependencies or its build output. Dev-only updates (test tooling, CI actions)
+# don't reach users, so they don't produce a release.
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    # Commits pushed by this workflow use GITHUB_TOKEN, which doesn't trigger new
+    # runs, so the release commit can't loop. The check below is a second guard.
+    if: "!startsWith(github.event.head_commit.message, 'Release v')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Decide whether to release
+        id: check
+        run: node scripts/release.mjs check "${{ github.event.before }}"
+
+      - if: steps.check.outputs.release == 'true'
+        run: npm ci
+
+      - if: steps.check.outputs.release == 'true'
+        run: npm test
+
+      - name: Bump version, rebuild and update the changelog
+        if: steps.check.outputs.release == 'true'
+        id: bump
+        run: node scripts/release.mjs bump
+
+      - name: Commit, tag and publish the release
+        if: steps.check.outputs.release == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Release v${VERSION}"
+          git tag -a "v${VERSION}" -m "mcpx ${VERSION}"
+          git push origin HEAD:main --follow-tags
+          gh release create "v${VERSION}" --title "mcpx ${VERSION}" --generate-notes --latest
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

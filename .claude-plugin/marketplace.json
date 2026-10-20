@@ -1,0 +1,12 @@
+{
+  "name": "mcpx",
+  "description": "Claude Code plugin for mcpx, the command-line client for MCP servers",
+  "owner": { "name": "Timo Willemsen" },
+  "plugins": [
+    {
+      "name": "mcpx",
+      "source": "./plugins/mcpx",
+      "description": "Teaches Claude to use MCP servers through the mcpx CLI, plus /mcpx:setup to install it"
+    }
+  ]
+}

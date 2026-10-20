@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security issue
+    url: https://github.com/TimoWillemsen/mcpx/blob/main/SECURITY.md
+    about: Please report vulnerabilities privately, not as an issue.
+  - name: Documentation
+    url: https://github.com/TimoWillemsen/mcpx#readme
+    about: Configuration, commands, authentication and guardrails.
