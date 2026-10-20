@@ -17,6 +17,8 @@ export interface TransportHandle {
   transport: Transport;
   /** Recent server stderr, for error messages. Empty for non-stdio transports. */
   stderrTail(): string;
+  /** Why the server process couldn't start, if it couldn't (stdio only). */
+  startError?(): Error | undefined;
   /** Best-effort cleanup before close, e.g. ending an HTTP session. */
   terminate(): Promise<void>;
 }
@@ -46,6 +48,15 @@ function createStdioTransport(
     stderr: opts.verbose ? "inherit" : "pipe",
   });
 
+  // On Windows, cross-spawn reports a missing command only when the process
+  // exits, after start() has resolved; connect() then just fails with
+  // "Connection closed". Keep the real error. Client.connect() chains this handler.
+  let startError: Error | undefined;
+  transport.onerror = (err) => {
+    const code = (err as NodeJS.ErrnoException).code;
+    if (code === "ENOENT" || code === "EACCES") startError ??= err;
+  };
+
   let tail = "";
   transport.stderr?.on("data", (chunk: Buffer) => {
     tail = (tail + chunk.toString("utf8")).slice(-STDERR_TAIL_BYTES);
@@ -54,6 +65,7 @@ function createStdioTransport(
   return {
     transport,
     stderrTail: () => tail.trim(),
+    startError: () => startError,
     terminate: async () => {},
   };
 }

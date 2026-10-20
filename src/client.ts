@@ -51,7 +51,7 @@ export async function withSession<T>(
   const sentCredentials =
     isStdio(resolved) || Boolean(authProvider) || hasAuthorizationHeader(resolved);
   const classify = (err: unknown) =>
-    classifyError(serverName, err, handle.stderrTail(), sentCredentials);
+    classifyError(serverName, handle.startError?.() ?? err, handle.stderrTail(), sentCredentials);
   const client = new Client({ name: "mcpx", version: VERSION });
   const abort = new AbortController();
   const requestOptions = { signal: abort.signal, timeout: opts.timeoutMs };

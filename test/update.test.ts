@@ -18,7 +18,8 @@ const git = (cwd: string, ...args: string[]) =>
 
 function mcpx(args: string[], env: Record<string, string> = {}) {
   const r = spawnSync("node", [CLI, ...args], {
-    env: { ...process.env, MCPX_CONFIG_DIR: dir, MCPX_UPDATE_REPO: `file://${repo}`, ...env },
+    // CI=true (set by GitHub Actions) would block updates before the checks under test.
+    env: { ...process.env, CI: "", MCPX_CONFIG_DIR: dir, MCPX_UPDATE_REPO: `file://${repo}`, ...env },
     encoding: "utf8",
     timeout: 30_000,
   });
