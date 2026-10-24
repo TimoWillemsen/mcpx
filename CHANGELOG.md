@@ -6,6 +6,11 @@ All notable changes to mcpx are documented here. The format follows
 
 ## [Unreleased]
 
+## [0.4.2] - 2026-10-24
+
+### Changed
+- Dependency updates. See the [release notes](https://github.com/TimoWillemsen/mcpx/releases/tag/v0.4.2).
+
 ## [0.4.1] - 2026-10-20
 
 ### Changed
@@ -96,5 +101,6 @@ First release.
 - A Claude Code plugin with the mcpx skill and `/mcpx:setup`; the repository is its
   own plugin marketplace.
 
-[Unreleased]: https://github.com/TimoWillemsen/mcpx/compare/v0.4.1...HEAD
+[Unreleased]: https://github.com/TimoWillemsen/mcpx/compare/v0.4.2...HEAD
+[0.4.2]: https://github.com/TimoWillemsen/mcpx/releases/tag/v0.4.2
 [0.4.1]: https://github.com/TimoWillemsen/mcpx/releases/tag/v0.4.1

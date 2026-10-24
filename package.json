@@ -1,6 +1,6 @@
 {
   "name": "mcpx",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "A command-line client for MCP servers: list and call tools from any shell, script or coding agent. Stdio, Streamable HTTP and SSE; OAuth with keychain storage.",
   "keywords": [
     "mcp",

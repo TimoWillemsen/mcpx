@@ -1,6 +1,6 @@
 {
   "name": "mcpx",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Use any MCP server from your coding agent through the mcpx CLI: a skill that teaches the agent to discover, describe and call MCP tools, and a setup command that installs mcpx.",
   "author": {
     "name": "Timo Willemsen"

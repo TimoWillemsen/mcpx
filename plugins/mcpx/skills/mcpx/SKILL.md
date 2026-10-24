@@ -3,7 +3,7 @@ name: mcpx
 description: "Use MCP servers through the mcpx CLI: list servers and tools, read tool schemas and call tools. Use when the user asks for data or actions from an external service (issue tracker, knowledge base, docs, internal API, ...) that you have no native tool for, or when they mention mcpx or MCP."
 ---
 
-<!-- managed by mcpx 0.4.1; re-run `mcpx setup-agent` to update -->
+<!-- managed by mcpx 0.4.2; re-run `mcpx setup-agent` to update -->
 
 ## Using MCP servers with mcpx
 
