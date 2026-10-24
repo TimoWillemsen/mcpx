@@ -18,6 +18,15 @@ function createStdioTransport(server, opts) {
         // Keep stdout clean: server logs go to our stderr only with --verbose.
         stderr: opts.verbose ? "inherit" : "pipe",
     });
+    // On Windows, cross-spawn reports a missing command only when the process
+    // exits, after start() has resolved; connect() then just fails with
+    // "Connection closed". Keep the real error. Client.connect() chains this handler.
+    let startError;
+    transport.onerror = (err) => {
+        const code = err.code;
+        if (code === "ENOENT" || code === "EACCES")
+            startError ??= err;
+    };
     let tail = "";
     transport.stderr?.on("data", (chunk) => {
         tail = (tail + chunk.toString("utf8")).slice(-STDERR_TAIL_BYTES);
@@ -25,6 +34,7 @@ function createStdioTransport(server, opts) {
     return {
         transport,
         stderrTail: () => tail.trim(),
+        startError: () => startError,
         terminate: async () => { },
     };
 }

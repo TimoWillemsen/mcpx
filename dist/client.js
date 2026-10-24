@@ -18,7 +18,7 @@ export async function withSession(serverName, server, opts, fn) {
     const authProvider = await storedAuthProvider(serverName, resolved);
     const handle = createTransport(resolved, { ...opts, authProvider });
     const sentCredentials = isStdio(resolved) || Boolean(authProvider) || hasAuthorizationHeader(resolved);
-    const classify = (err) => classifyError(serverName, err, handle.stderrTail(), sentCredentials);
+    const classify = (err) => classifyError(serverName, handle.startError?.() ?? err, handle.stderrTail(), sentCredentials);
     const client = new Client({ name: "mcpx", version: VERSION });
     const abort = new AbortController();
     const requestOptions = { signal: abort.signal, timeout: opts.timeoutMs };
